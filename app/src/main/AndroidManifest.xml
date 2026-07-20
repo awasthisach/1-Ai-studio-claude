@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Core File Manager: full device file access.
+         Play Store requires the "All Files Access" declaration form for this permission.
+         File-manager apps are an approved use-case, but the form must be filled at
+         submission time — see docs/PENDING_WORK.md item 6. -->
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <!-- Fallback / pre-Android 11 and media-only access paths -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    <!-- Vault biometric unlock -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
+    <!-- Background indexing (Phase 12) runs as a plain WorkManager CoroutineWorker, not a
+         foreground service — no setForeground() call exists in IndexingWorker. FOREGROUND_SERVICE
+         permissions are deliberately NOT declared here: an unused FGS-type permission (especially
+         FOREGROUND_SERVICE_DATA_SYNC on Android 14+) is dead weight and a Play Store review flag.
+         If indexing later needs foreground promotion for very large libraries, add both the
+         permission and an actual setForeground() call together — see docs/PENDING_WORK.md. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:name=".SmartManagerApp"
+        android:allowBackup="false"
+        android:fullBackupContent="@xml/backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.VvfSmartManager"
+        android:supportsRtl="true"
+        tools:targetApi="34">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.VvfSmartManager.Splash"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge" />
+
+        <!-- SmartManagerApp implements Configuration.Provider (Hilt-injected WorkerFactory for
+             IndexingWorker, Phase 12). Per Android's on-demand-initialization docs, WorkManager's
+             own default initializer MUST be explicitly removed when doing this — implementing
+             Configuration.Provider alone is not sufficient and can conflict with the default
+             initializer at app startup. -->
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove" />
+
+    </application>
+
+</manifest>

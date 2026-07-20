@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VVF Smart Manager</string>
+
+    <!-- Navigation -->
+    <string name="nav_files">Files</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_vault">Vault</string>
+    <string name="nav_storage">Storage</string>
+    <string name="nav_duplicates">Duplicates</string>
+
+    <!-- File manager -->
+    <string name="action_copy">Copy</string>
+    <string name="action_move">Move</string>
+    <string name="action_rename">Rename</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_restore">Restore</string>
+    <string name="recycle_bin">Recycle Bin</string>
+    <string name="empty_folder">यह folder खाली है</string>
+
+    <!-- Vault -->
+    <string name="vault_locked_title">Vault Locked</string>
+    <string name="vault_unlock_prompt">जारी रखने के लिए unlock करें</string>
+    <string name="vault_use_biometric">Biometric से Unlock करें</string>
+    <string name="vault_use_pin">PIN डालें</string>
+    <string name="vault_set_pin">नया PIN सेट करें</string>
+    <string name="vault_wrong_pin">गलत PIN, फिर कोशिश करें</string>
+
+    <!-- Search -->
+    <string name="search_hint">फाइलें खोजें…</string>
+    <string name="search_no_results">कोई परिणाम नहीं मिला</string>
+
+    <!-- Storage -->
+    <string name="storage_summary_title">Storage Summary</string>
+
+    <!-- Duplicates -->
+    <string name="duplicate_scan_start">Duplicate Scan शुरू करें</string>
+    <string name="duplicate_group_count">%1$d समान फाइलें मिलीं</string>
+
+    <!-- Permissions -->
+    <string name="permission_rationale_title">Storage Access चाहिए</string>
+    <string name="permission_rationale_body">VVF Smart Manager को आपकी फाइलें दिखाने और व्यवस्थित करने के लिए Storage Access चाहिए। यह डेटा कभी device से बाहर नहीं भेजा जाता जब तक आप खुद Cloud Sync ऑन न करें।</string>
+    <string name="permission_grant">अनुमति दें</string>
+</resources>

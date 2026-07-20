@@ -1,0 +1,6 @@
+{
+  "name": "VVF Smart Manager",
+  "description": "Privacy-First, Offline-First, AI-Powered Personal File Management Platform — Vishva Vijayaa Foundation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

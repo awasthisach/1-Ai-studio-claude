@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- VVF Brand Palette — Master Specification v2.0, Section 13 -->
+    <color name="vvf_bhagwa_orange">#F47B20</color>
+    <color name="vvf_cosmic_blue">#102B52</color>
+    <color name="vvf_emerald_green">#3FA34D</color>
+    <color name="vvf_sky_cyan">#5BC0EB</color>
+    <color name="vvf_soft_gold">#D4A95A</color>
+
+    <color name="vvf_surface_light">#FFFBF7</color>
+    <color name="vvf_surface_dark">#0B1A2E</color>
+    <color name="vvf_error">#BA1A1A</color>
+
+    <color name="ic_launcher_background">#0A0A0A</color>
+</resources>
