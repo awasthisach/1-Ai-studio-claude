@@ -15,11 +15,12 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
       - name: Run unit tests
-        run: ./gradlew testDebugUnitTest
+        run: gradle testDebugUnitTest
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -34,12 +35,13 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
       - name: Run Android Lint
-        run: ./gradlew lintDebug
-        continue-on-error: true # findings visible in artifact, don't block early builds
+        run: gradle lintDebug
+        continue-on-error: true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -57,16 +59,14 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
-      # As of the Jan 2026 runner-image trim, ubuntu-latest no longer reliably ships every SDK
-      # platform (or even sdkmanager) pre-installed — this step makes SDK 35 presence explicit
-      # instead of assuming it, per the Zero Assumption Rule (Master AI Agent v1.0).
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
       - name: Build debug APK
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: vvf-debug-apk
@@ -81,11 +81,12 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
       - name: Decode keystore and build release APK
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
@@ -95,14 +96,14 @@ jobs:
         run: |
           if [ -n "$KEYSTORE_BASE64" ]; then
             echo "$KEYSTORE_BASE64" | base64 -d > app/release.keystore
-            ./gradlew assembleRelease \
+            gradle assembleRelease \
               -Pandroid.injected.signing.store.file=$(pwd)/app/release.keystore \
               -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
               -Pandroid.injected.signing.store.key.alias="$KEY_ALIAS" \
               -Pandroid.injected.signing.store.key.password="$KEY_PASSWORD"
           else
-            echo "KEYSTORE_BASE64 secret सेट नहीं है — unsigned release APK बनाया जा रहा है."
-            ./gradlew assembleRelease
+            echo "KEYSTORE_BASE64 secret set nahi hai — unsigned release APK banaya ja raha hai."
+            gradle assembleRelease
           fi
       - uses: actions/upload-artifact@v4
         with:
